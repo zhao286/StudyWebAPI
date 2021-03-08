@@ -20,6 +20,7 @@ namespace TestWebApi.Controllers
             _userService = userService;
         }
 
+        [HttpGet()]
         [Route("info")]
         public IActionResult Info([FromQuery]int id)
         {
