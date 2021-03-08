@@ -27,6 +27,7 @@ namespace TestWebApi.Controllers
             return new JsonResult(user);
         }
 
+        [HttpPost()]
         [Route("login")]
         public IActionResult Login(User user)
         {
