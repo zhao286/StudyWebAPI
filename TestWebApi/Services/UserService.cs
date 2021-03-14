@@ -16,7 +16,7 @@ namespace TestWebApi.Services
     {
         private readonly IUserRespository _userRepository = null;
 
-        public UserService(IUserRespository userRespository)
+          public UserService(IUserRespository userRespository)
         {
             this._userRepository = userRespository;
         }

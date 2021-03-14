@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestWebApi.Models;
+using System.Data.SqlClient;
+using System.Data;
+using Microsoft.Extensions.Configuration;
+using Dapper;
+using Dapper.Contrib.Extensions;
 
 namespace TestWebApi.DBContexts
 {
@@ -11,6 +16,20 @@ namespace TestWebApi.DBContexts
     /// </summary>
     public class DBContext
     {
+        public IConfiguration Configuration { get; }
+        private readonly IDbConnection _conn = null;
+
+        public DBContext(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            _conn = new SqlConnection(Configuration["ConnectionStrings:RocheDb"]);
+        }
+
+        public List<Demo> GetDemo_Data()
+        {
+            return _conn.Query<Demo>("select * from demo").ToList();
+        }
+
         /// <summary>
         /// 用户信息，模拟数据库表
         /// </summary>
