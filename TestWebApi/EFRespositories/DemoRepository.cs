@@ -40,12 +40,9 @@ namespace TestWebApi.EFRespositories
                 "select * from demo where tid = '4'",
                 "select * from demo where tid in(1,7,8,9)"
             };
-            int j = 0;
-            var first = lstSQL.FindIndex(x => x.Contains("where"));
-            j++;
-            var next = lstSQL.FindIndex(x => x.Contains("select"));
 
-            List<Demo> rt = _conn.Query<Demo>("select * from demo where tid in @tid", new { tid = tid }).ToList();
+            //List<Demo> rt = _conn.Query<Demo>("select * from demo where tid in @tid", new { tid = tid }).ToList();
+            List<Demo> rt = _conn.Query<Demo>("select * from demo where 1<>1").OrderBy(x=>x.tid).ToList();
 
             var mr = _conn.QueryMultiple(string.Join(";",lstSQL));
 

@@ -33,6 +33,7 @@ namespace TestWebApi
         {
 
             services.AddControllers();
+            services.AddMemoryCache();
             services.AddSingleton(Configuration);
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRespository, UserRepository>();
