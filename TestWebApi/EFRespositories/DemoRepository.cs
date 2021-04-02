@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -41,8 +42,27 @@ namespace TestWebApi.EFRespositories
                 "select * from demo where tid in(1,7,8,9)"
             };
 
-            //List<Demo> rt = _conn.Query<Demo>("select * from demo where tid in @tid", new { tid = tid }).ToList();
-            List<Demo> rt = _conn.Query<Demo>("select * from demo where 1<>1").OrderBy(x=>x.tid).ToList();
+            List<Demo> rt = _conn.Query<Demo>("select * from demo where tid in @tid", new { tid = tid }).ToList();
+
+            List<dynamic> baseinfo = _conn.Query("select * from demo where tid in (1,2)").ToList();
+            List<dynamic> mergeInf = _conn.Query("select * from demo where tid in (2,3,4,5,10)").ToList();
+            List<dynamic> mergeAnd = new List<dynamic>();
+
+                mergeInf?.ForEach(m =>
+                {
+
+                    //if (baseinfo.All(e => e.tid != m.tid))
+                    //{
+                    //    baseinfo.Add(m);
+                    //}
+
+                    if (baseinfo.Any(e => e.tid == m.tid))
+                    {
+                        mergeAnd.Add(m);
+                    }
+                });
+
+            //List<Demo> rt = _conn.Query<Demo>("select * from demo where 1<>1").OrderBy(x=>x.tid).ToList();
 
             var mr = _conn.QueryMultiple(string.Join(";",lstSQL));
 

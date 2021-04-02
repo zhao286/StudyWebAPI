@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace TestWebApi.Models
 {
+    [Table("Demo")]
     public class Demo
     {
+        [Key]
         public int tid { get; set; }
-        [Write(false)]
         public string tname { get; set; }
-
+        [Write(false)]
         public byte isNull { get; set; }
 
         public byte typeid { get; set; }
